@@ -1,0 +1,34 @@
+{
+  "info" : 
+  {
+    "name" : "QxDyGraphs Demo",
+
+    "summary" : "QxDyGraphs Demo",
+    "description" : "Show off the QxDyGraphs Contrib",
+    
+    "homepage" : "http://demo.qooxdoo.org/contrib/QxDyGraphs",
+
+    "license" : "LGPL/EPL",
+    "authors" : 
+    [
+      {
+        "name" : "Tobi Oetiker (oetiker)",
+        "email" : "tobi@oetiker.ch"
+      }
+    ],
+
+    "version" : "trunk",
+    "qooxdoo-versions": ["1.2"]
+  },
+  
+  "provides" : 
+  {
+    "namespace"   : "qxdygraphs.demo",
+    "encoding"    : "utf-8",
+    "class"       : "source/class",
+    "resource"    : "source/resource",
+    "translation" : "source/translation",
+    "type"        : "application"
+  }
+}
+
