@@ -81,9 +81,8 @@ qx.Class.define("qxdygraphs.Plot", {
             labelsDivStyles: {
                 fontSize: 13
             },
-            labelsDivWidth: 230,
+            labelsDivWidth: 230
         }
-
     },
     events : {
         /**
