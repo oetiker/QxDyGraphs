@@ -49,6 +49,12 @@ qx.Class.define("qxdygraphs.Plot", {
 
     construct: function(data,options){
         this.base(arguments);
+
+        var min = '.min';
+        if (qx.core.Variant.isSet("qx.debug", "on")) {
+            min = '';
+        }
+
         var codeArr = [
             "dygraph-combined.js"
         ];
