@@ -14,8 +14,8 @@ qx.Class.define("qxdygraphs.demo.Application", {
             qx.log.appender.Console;
         };
         var data = [];
-        for (var i=1;i<10000;i++){
-            data.push([new Date((1000000000+i*360)*1000),Math.random(),Math.sin(i/1000)]);
+        for (var i=1;i<1000;i++){
+            data.push([new Date((1000000000+i*36)*1000),Math.random(),Math.sin(i/100)]);
         }
 
         var options = {
