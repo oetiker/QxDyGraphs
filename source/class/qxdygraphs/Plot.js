@@ -156,6 +156,14 @@ qx.Class.define("qxdygraphs.Plot", {
                     qx.theme.manager.Font.getInstance().resolve('default').getStyles(),
                     true
                 );
+             /* with IE and excanvas, we have to
+                 add the missing method to the canvas
+                 element first since the initial loading
+                 only catches elements from the original html */
+                if (!el.getContext && window.G_vmlCanvasManager) {
+                   window.G_vmlCanvasManager.initElement(el);
+                }
+
                 qx.lang.Object.mergeWith(options,qxdygraphs.Plot.DEFAULT_OPTIONS,false);
                 var plot = this.__plotObject = new Dygraph(el,data,options);
                 this.addListener('resize',function(e){
