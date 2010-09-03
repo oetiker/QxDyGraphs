@@ -155,14 +155,6 @@ qx.Class.define("qxdygraphs.Plot", {
                     true
                 );
 
-                /* if we are on IE, overwrite dygraphs idea of creating a
-                /* canvas with our less 'complex' world view */
-                if (!el.getContext && window.G_vmlCanvasManager) {
-                   Dygraph.createCanvas = function() {
-                       return window.G_vmlCanvasManager.initElement(document.createElement("canvas"));
-                   };
-                }
-
                 qx.lang.Object.mergeWith(options,qxdygraphs.Plot.DEFAULT_OPTIONS,false);
                 var plot = this.__plotObject = new Dygraph(el,data,options);
                 this.addListener('resize',function(e){
