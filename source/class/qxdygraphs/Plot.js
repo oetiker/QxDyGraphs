@@ -59,7 +59,7 @@ qx.Class.define("qxdygraphs.Plot", {
             "dygraph-combined.js"
         ];
 
-        if (qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.VERSION < 9.0){
+        if ( qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.VERSION < 9.0 && !window.G_vmlCanvasManager){
             codeArr.push("excanvas"+min+".js");
         }
         this.__loadScriptArr(codeArr,qx.lang.Function.bind(this.__addCanvas,this,data,options));
