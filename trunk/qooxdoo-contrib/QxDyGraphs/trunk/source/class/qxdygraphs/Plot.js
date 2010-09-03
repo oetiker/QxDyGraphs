@@ -54,14 +54,12 @@ qx.Class.define("qxdygraphs.Plot", {
         if (qx.core.Variant.isSet("qx.debug", "on")) {
             min = '';
         }
-
-        var codeArr = [
-            "dygraph-combined.js"
-        ];
-
+        var codeArr = [];
         if ( qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.VERSION < 9.0 && !window.G_vmlCanvasManager){
             codeArr.push("excanvas"+min+".js");
         }
+        codeArr.push("dygraph-combined.js");
+
         this.__loadScriptArr(codeArr,qx.lang.Function.bind(this.__addCanvas,this,data,options));
     },
     statics : { 
@@ -156,12 +154,13 @@ qx.Class.define("qxdygraphs.Plot", {
                     qx.theme.manager.Font.getInstance().resolve('default').getStyles(),
                     true
                 );
-             /* with IE and excanvas, we have to
-                 add the missing method to the canvas
-                 element first since the initial loading
-                 only catches elements from the original html */
+
+                /* if we are on IE, overwrite dygraphs idea of creating a
+                /* canvas with our less 'complex' world view */
                 if (!el.getContext && window.G_vmlCanvasManager) {
-                   window.G_vmlCanvasManager.initElement(el);
+                   Dygraph.createCanvas = function() {
+                       return window.G_vmlCanvasManager.initElement(document.createElement("canvas"));
+                   };
                 }
 
                 qx.lang.Object.mergeWith(options,qxdygraphs.Plot.DEFAULT_OPTIONS,false);
