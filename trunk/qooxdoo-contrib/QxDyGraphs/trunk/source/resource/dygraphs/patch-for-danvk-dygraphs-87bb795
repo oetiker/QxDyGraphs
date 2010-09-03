@@ -1,0 +1,150 @@
+diff -ru danvk-dygraphs-87bb795/dygraph-canvas.js danvk-dygraphs-87bb795.patched/dygraph-canvas.js
+--- danvk-dygraphs-87bb795/dygraph-canvas.js	2010-08-05 23:05:24.000000000 +0200
++++ danvk-dygraphs-87bb795.patched/dygraph-canvas.js	2010-09-03 15:07:21.000000000 +0200
+@@ -199,8 +199,8 @@
+   this.width = this.element.width;
+ 
+   // --- check whether everything is ok before we return
+-  if (!this.isIE && !(DygraphCanvasRenderer.isSupported(this.element)))
+-      throw "Canvas is not supported.";
++//  if (!this.isIE && !(DygraphCanvasRenderer.isSupported(this.element)))
++//      throw "Canvas is not supported.";
+ 
+   // internal state
+   this.xlabels = new Array();
+@@ -219,7 +219,7 @@
+ };
+ 
+ DygraphCanvasRenderer.prototype.clear = function() {
+-  if (this.isIE) {
++/*  if (this.isIE) {
+     // VML takes a while to start up, so we just poll every this.IEDelay
+     try {
+       if (this.clearDelay) {
+@@ -235,6 +235,7 @@
+       return;
+     }
+   }
++*/
+ 
+   var context = this.element.getContext("2d");
+   context.clearRect(0, 0, this.width, this.height);
+@@ -276,6 +277,8 @@
+  */
+ DygraphCanvasRenderer.prototype.render = function() {
+   // Draw the new X/Y grid
++  function gf(x){return Math.round(x)+0.5};
++
+   var ctx = this.element.getContext("2d");
+ 
+   if (this.options.underlayCallback) {
+@@ -288,11 +291,11 @@
+     ctx.strokeStyle = this.options.gridLineColor;
+     ctx.lineWidth = this.options.axisLineWidth;
+     for (var i = 0; i < ticks.length; i++) {
+-      var x = this.area.x;
+-      var y = this.area.y + ticks[i][0] * this.area.h;
++      var x = gf(this.area.x);
++      var y = gf(this.area.y + ticks[i][0] * this.area.h);
+       ctx.beginPath();
+       ctx.moveTo(x, y);
+-      ctx.lineTo(x + this.area.w, y);
++      ctx.lineTo(x + Math.round(this.area.w), y);
+       ctx.closePath();
+       ctx.stroke();
+     }
+@@ -304,11 +307,11 @@
+     ctx.strokeStyle = this.options.gridLineColor;
+     ctx.lineWidth = this.options.axisLineWidth;
+     for (var i=0; i<ticks.length; i++) {
+-      var x = this.area.x + ticks[i][0] * this.area.w;
+-      var y = this.area.y + this.area.h;
++      var x = gf(this.area.x + ticks[i][0] * this.area.w);
++      var y = gf(this.area.y + this.area.h);
+       ctx.beginPath();
+       ctx.moveTo(x, y);
+-      ctx.lineTo(x, this.area.y);
++      ctx.lineTo(x, gf(this.area.y));
+       ctx.closePath();
+       ctx.stroke();
+     }
+@@ -324,6 +327,8 @@
+   if (!this.options.drawXAxis && !this.options.drawYAxis)
+     return;
+ 
++  function gf(x){return Math.round(x)+0.5};
++
+   var context = this.element.getContext("2d");
+ 
+   var labelStyle = {
+@@ -355,11 +360,11 @@
+       for (var i = 0; i < this.layout.yticks.length; i++) {
+         var tick = this.layout.yticks[i];
+         if (typeof(tick) == "function") return;
+-        var x = this.area.x;
+-        var y = this.area.y + tick[0] * this.area.h;
++        var x = gf(this.area.x);
++        var y = gf(this.area.y + tick[0] * this.area.h);
+         context.beginPath();
+         context.moveTo(x, y);
+-        context.lineTo(x - this.options.axisTickSize, y);
++        context.lineTo(x - Math.round(this.options.axisTickSize), y);
+         context.closePath();
+         context.stroke();
+ 
+@@ -392,8 +397,8 @@
+     }
+ 
+     context.beginPath();
+-    context.moveTo(this.area.x, this.area.y);
+-    context.lineTo(this.area.x, this.area.y + this.area.h);
++    context.moveTo(gf(this.area.x), gf(this.area.y));
++    context.lineTo(gf(this.area.x), gf(this.area.y + this.area.h));
+     context.closePath();
+     context.stroke();
+   }
+@@ -404,11 +409,11 @@
+         var tick = this.layout.xticks[i];
+         if (typeof(dataset) == "function") return;
+ 
+-        var x = this.area.x + tick[0] * this.area.w;
+-        var y = this.area.y + this.area.h;
++        var x = gf(this.area.x + tick[0] * this.area.w);
++        var y = gf(this.area.y + this.area.h);
+         context.beginPath();
+         context.moveTo(x, y);
+-        context.lineTo(x, y + this.options.axisTickSize);
++        context.lineTo(x, y + Math.round(this.options.axisTickSize));
+         context.closePath();
+         context.stroke();
+ 
+@@ -434,8 +439,8 @@
+     }
+ 
+     context.beginPath();
+-    context.moveTo(this.area.x, this.area.y + this.area.h);
+-    context.lineTo(this.area.x + this.area.w, this.area.y + this.area.h);
++    context.moveTo(gf(this.area.x), gf(this.area.y + this.area.h));
++    context.lineTo(gf(this.area.x + this.area.w), gf(this.area.y + this.area.h));
+     context.closePath();
+     context.stroke();
+   }
+diff -ru danvk-dygraphs-87bb795/dygraph.js danvk-dygraphs-87bb795.patched/dygraph.js
+--- danvk-dygraphs-87bb795/dygraph.js	2010-08-05 23:05:24.000000000 +0200
++++ danvk-dygraphs-87bb795.patched/dygraph.js	2010-09-03 15:09:04.000000000 +0200
+@@ -2299,12 +2299,9 @@
+  */
+ Dygraph.createCanvas = function() {
+   var canvas = document.createElement("canvas");
+-
+-  isIE = (/MSIE/.test(navigator.userAgent) && !window.opera);
+-  if (isIE) {
+-    canvas = G_vmlCanvasManager.initElement(canvas);
+-  }
+-
++  if (!canvas.getContext && window.G_vmlCanvasManager) {
++      window.G_vmlCanvasManager.initElement(canvas);
++  };
+   return canvas;
+ };
+ 
