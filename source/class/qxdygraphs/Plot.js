@@ -83,7 +83,8 @@ qx.Class.define("qxdygraphs.Plot", {
             ],
             axisLabelFontSize: 12,
             labelsDivStyles: {
-                fontSize: 13
+                fontSize: 13,
+                textAlign: 'right'
             },
             labelsDivWidth: 230
         }
