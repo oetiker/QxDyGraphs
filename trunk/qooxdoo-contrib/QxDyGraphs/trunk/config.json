@@ -29,7 +29,7 @@
   {
     "APPLICATION"  : "qxdygraphs",
     "APPLICATION_MAIN_CLASS" : "${APPLICATION}.demo.Demo",
-    "QOOXDOO_PATH" : "../../qooxdoo/1.2",
+    "QOOXDOO_PATH" : "../../qooxdoo/1.3",
     //"QXTHEME"      : "qxdygraphs.theme.modern.Theme",
     "QXTHEME"      : "qx.theme.Modern",
     "API_EXCLUDE"  : ["qx.test.*", "qxdygraphs.demo.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*"],
