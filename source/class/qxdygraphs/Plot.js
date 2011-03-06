@@ -34,7 +34,7 @@
  *     data.push([new Date(1000000000+i*3600*1000),Math.random(),Math.sin(i/50)]);
  * }
  * var options = {
- *    labels: [ 'Random','Sin' ]
+ *    labels: [ 'Date', 'Random','Sin' ]
  * };
  * var plot = new qxdygraphs.Plot(data,options); 
  * </pre>

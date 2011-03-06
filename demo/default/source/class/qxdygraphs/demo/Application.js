@@ -19,7 +19,8 @@ qx.Class.define("qxdygraphs.demo.Application", {
         }
 
         var options = {
-            lables: [ 'Random','Sin' ]
+            labels: [ 'Date','Sin','Random' ],
+            labelsDivWidth: 400
         };
 
         var plotDemo = [{
