@@ -1,0 +1,34 @@
+{
+  "info" : 
+  {
+    "name" : "QxDyGraphs",
+
+    "summary" : "QxDyGraphs Contribution",
+    "description" : "Makes Dan Vanderkams Dygraph charting library available in Qooxdoo",
+    
+    "homepage" : "http://contrib.qooxdoo.org/project/QxDyGraphs",
+
+    "license" : "LGPL/EPL",
+    "authors" : 
+    [
+      {
+        "name" : "Tobi Oetiker (oetiker)",
+        "email" : "tobi@oetiekr.ch"
+      }
+    ],
+
+    "version" : "trunk",
+    "qooxdoo-versions": ["1.2","1.3"]
+  },
+  
+  "provides" : 
+  {
+    "namespace"   : "qxdygraphs",
+    "encoding"    : "utf-8",
+    "class"       : "source/class",
+    "resource"    : "source/resource",
+    "translation" : "source/translation",
+    "type"        : "contribution"
+  }
+}
+
