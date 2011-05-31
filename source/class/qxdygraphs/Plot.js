@@ -55,8 +55,11 @@ qx.Class.define("qxdygraphs.Plot", {
             min = '';
         }
         var codeArr = [];
-        if ( ! qx.core.Environment.get('html.canvas') && qx.core.Environment.get('engine.name') == 'mshtml' && !window.G_vmlCanvasManager){
-            codeArr.push("excanvas"+min+".js");
+        if ( ! qx.core.Environment.get('html.canvas') && qx.core.Environment.get('engine.name') == 'mshtml'){
+            this.__useExCanvas = true;
+            if (!window.G_vmlCanvasManager){
+                codeArr.push("excanvas"+min+".js");
+            }
         }
         codeArr.push("dygraph-combined.js");
 
@@ -99,7 +102,8 @@ qx.Class.define("qxdygraphs.Plot", {
          */
         scriptLoaded: 'qx.event.type.Event'
     },
-    members : {        
+    members : {    
+        __useExCanvas: false,    
         getPlotObject: function(){
             return this.__plotObject;
         },        
@@ -155,7 +159,9 @@ qx.Class.define("qxdygraphs.Plot", {
                     qx.theme.manager.Font.getInstance().resolve('default').getStyles(),
                     true
                 );
-
+                if (this.__useExCanvas){
+                    window.G_vmlCanvasManager.initElement(el);
+                }
                 qx.lang.Object.mergeWith(options,qxdygraphs.Plot.DEFAULT_OPTIONS,false);
                 var plot = this.__plotObject = new Dygraph(el,data,options);
                 this.addListener('resize',function(e){
