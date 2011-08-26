@@ -16,6 +16,7 @@
 /* ************************************************************************
 
 #asset(dygraphs/*)
+#ignore(Dygraph)
 
 ************************************************************************ */
 
@@ -51,7 +52,7 @@ qx.Class.define("qxdygraphs.Plot", {
         this.base(arguments);
 
         var min = '.min';
-        if (qx.core.Variant.isSet("qx.debug", "on")) {
+        if (qx.core.Environment.get("qx.debug")) {
             min = '';
         }
         var codeArr = [];
