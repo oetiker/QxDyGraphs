@@ -150,7 +150,10 @@ qx.Class.define("qxdygraphs.Plot", {
          * @lint ignoreUndefined(Dygraph)
          */
         __addCanvas: function(data,options){
-            var el = this.getContentElement().getDomElement();
+            var el = this.getContentElement();
+            if (el){
+                el = el.getDomElement();
+            }
             /* make sure the element is here yet. Else wait until things show up */
             if (el == null){
                 this.addListenerOnce('appear',qx.lang.Function.bind(this.__addCanvas,this,data,options),this);
