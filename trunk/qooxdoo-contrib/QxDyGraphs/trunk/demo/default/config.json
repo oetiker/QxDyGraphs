@@ -32,7 +32,7 @@
   "let" :
   {
     "APPLICATION"  : "qxdygraphs.demo",
-    "QOOXDOO_PATH" : "../../../../qooxdoo/2.0",
+    "QOOXDOO_PATH" : "../../../../qooxdoo/3.5",
     "QXTHEME"      : "qx.theme.Modern",
     "API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*"],
     "LOCALES"      : [ "en" ],

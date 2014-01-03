@@ -124,17 +124,29 @@ qx.Class.define("qxdygraphs.Plot", {
                 }
                 else {
                     qxdygraphs.Plot.LOADING[script] = this;
-                    var sl = new qx.io.ScriptLoader();
                     var src = qx.util.ResourceManager.getInstance().toUri("dygraphs/"+script);
-                    sl.load(src, function(status){
-                        if (status == 'success'){
-                            // this.debug("Dynamically loaded "+src+": "+status);
-                            this.__loadScriptArr(codeArr,handler);
+                    if (qx.io.ScriptLoader){
+                        var sl = new qx.io.ScriptLoader();
+                        sl.load(src, function(status){
+                            if (status == 'success'){
+                                // this.debug("Dynamically loaded "+src+": "+status);
+                                this.__loadScriptArr(codeArr,handler);
+                                qxdygraphs.Plot.LOADED[script] = true;
+                            }
+                            qxdygraphs.Plot.LOADING[script] = null;
+                            this.fireDataEvent('scriptLoaded',script);
+                        },this);
+                    }
+                    else {
+                        var req = new qx.bom.request.Script();
+                        req.on('load',function() {
                             qxdygraphs.Plot.LOADED[script] = true;
-                        }
-                        qxdygraphs.Plot.LOADING[script] = null;
-                        this.fireDataEvent('scriptLoaded',script);
-                    },this);
+                            qxdygraphs.Plot.LOADING[script] = null;   
+                            this.fireDataEvent('scriptLoaded',script);
+                        },this); 
+                        req.open("GET", src);
+                        req.send();
+                    }
                 }
             } else {
                 handler();
