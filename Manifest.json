@@ -13,12 +13,12 @@
     [
       {
         "name" : "Tobi Oetiker (oetiker)",
-        "email" : "tobi@oetiekr.ch"
+        "email" : "tobi@oetiker.ch"
       }
     ],
 
     "version" : "trunk",
-    "qooxdoo-versions": ["1.5","1.6","2.0"]
+    "qooxdoo-versions": ["1.5","1.6","2.0","3.0","3.5"]
   },
   
   "provides" : 
