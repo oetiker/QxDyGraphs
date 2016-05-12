@@ -2,7 +2,7 @@
 
    Copyright:
      2010 OETIKER+PARTNER AG, Tobi Oetiker, http://www.oetiker.ch
-     
+
    License:
      LGPL: http://www.gnu.org/licenses/lgpl.html
      EPL: http://www.eclipse.org/org/documents/epl-v10.php
@@ -37,7 +37,7 @@
  * var options = {
  *    labels: [ 'Date', 'Random','Sin' ]
  * };
- * var plot = new qxdygraphs.Plot(data,options); 
+ * var plot = new qxdygraphs.Plot(data,options);
  * </pre>
  */
 qx.Class.define("qxdygraphs.Plot", {
@@ -66,7 +66,7 @@ qx.Class.define("qxdygraphs.Plot", {
 
         this.__loadScriptArr(codeArr,qx.lang.Function.bind(this.__addCanvas,this,data,options));
     },
-    statics : { 
+    statics : {
         /**
          * map of loaded scripts
          */
@@ -81,7 +81,7 @@ qx.Class.define("qxdygraphs.Plot", {
         DEFAULT_OPTIONS: {
             // thanks to http://ui.openoffice.org/VisualDesign/OOoChart_colors_drafts.html
             colors:  [
-                '#005796',  '#46b535', '#e93f80', '#bbe3ff',
+                '#005796', '#46b535', '#e93f80', '#bbe3ff',
                 '#ff811b', '#007333', '#ffe370', '#a6004f', '#a6004f',
                 '#bde734', '#0094d8', '#ffbedd', '#ffbf17'
             ],
@@ -103,62 +103,72 @@ qx.Class.define("qxdygraphs.Plot", {
          */
         scriptLoaded: 'qx.event.type.Event'
     },
-    members : {    
-        __useExCanvas: false,    
+    members : {
+        __useExCanvas: false,
         getPlotObject: function(){
             return this.__plotObject;
-        },        
+        },
         /**
          * Chain loading scripts.
          */
         __loadScriptArr: function(codeArr,handler){
             var script = codeArr.shift();
-            if (script){
-                if (qxdygraphs.Plot.LOADING[script]){
-                    qxdygraphs.Plot.LOADING[script].addListenerOnce('scriptLoaded',function(){
-                        this.__loadScriptArr(codeArr,handler);
-                    },this);
-                }
-                else if ( qxdygraphs.Plot.LOADED[script]){
-                     this.__loadScriptArr(codeArr,handler);
-                }
-                else {
-                    qxdygraphs.Plot.LOADING[script] = this;
-                    var src = qx.util.ResourceManager.getInstance().toUri("dygraphs/"+script);
-                    if (qx.io.ScriptLoader){
-                        var sl = new qx.io.ScriptLoader();
-                        sl.load(src, function(status){
-                            if (status == 'success'){
-                                // this.debug("Dynamically loaded "+src+": "+status);
-                                this.__loadScriptArr(codeArr,handler);
-                                qxdygraphs.Plot.LOADED[script] = true;
-                            }
-                            qxdygraphs.Plot.LOADING[script] = null;
-                            this.fireDataEvent('scriptLoaded',script);
-                        },this);
-                    }
-                    else {
-                        var req = new qx.bom.request.Script();
-                        req.on('load',function() {
-                            qxdygraphs.Plot.LOADED[script] = true;
-                            qxdygraphs.Plot.LOADING[script] = null;   
-                            this.fireDataEvent('scriptLoaded',script);
-                        },this); 
-                        req.open("GET", src);
-                        req.send();
-                    }
-                }
-            } else {
+            if (!script){
                 handler();
+                return;
+            }
+            if ( qxdygraphs.Plot.LOADED[script]){
+                /* got this script, go for the next in the array */
+                this.__loadScriptArr(codeArr,handler);
+                return;
+            }
+
+            if (qxdygraphs.Plot.LOADING[script]){
+                /* but it is already loading, so lets listen for it to arrive */
+                qxdygraphs.Plot.LOADING[script].addListenerOnce('scriptLoaded',function(){
+                    this.__loadScriptArr(codeArr,handler);
+                },this);
+                return;
+            }
+
+            /* the script is not loaded nor loading, so we are going to */
+            qxdygraphs.Plot.LOADING[script] = this;
+            this.addListenerOnce('scriptLoaded',function(){
+                this.__loadScriptArr(codeArr,handler);
+            },this);
+
+            var src = qx.util.ResourceManager.getInstance().toUri("dygraphs/"+script);
+
+            if (qx.io.ScriptLoader){
+                var sl = new qx.io.ScriptLoader();
+                sl.load(src, function(status){
+                    if (status == 'success'){
+                        // this.debug("Dynamically loaded "+src+": "+status);
+                        this.__loadScriptArr(codeArr,handler);
+                        qxdygraphs.Plot.LOADED[script] = true;
+                    }
+                    delete qxdygraphs.Plot.LOADING[script];
+                    this.fireDataEvent('scriptLoaded',script);
+                },this);
+            }
+            else {
+                var req = new qx.bom.request.Script();
+                req.on('load',function() {
+                    qxdygraphs.Plot.LOADED[script] = true;
+                    delete qxdygraphs.Plot.LOADING[script];
+                    this.fireDataEvent('scriptLoaded',script);
+                },this);
+                req.open("GET", src);
+                req.send();
             }
         },
         /**
          * our copy of the plot object
-         */        
+         */
         __plotObject: null,
         /**
          * Create the canvas once everything is renderad
-         * 
+         *
          * @lint ignoreUndefined(Dygraph)
          */
         __addCanvas: function(data,options){
