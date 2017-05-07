@@ -1,4 +1,4 @@
-<b>QxDyGraphs Charting Library for time series data</b>
+# QxDyGraphs Charting Library for time series data
 
 This is a qooxdoo contribution provides a wrapper for Dan Vanderkams
 dygraphs charting library. Dygraph is specialized in displaying time
