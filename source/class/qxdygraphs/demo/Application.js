@@ -30,7 +30,7 @@ qx.Class.define("qxdygraphs.demo.Application", {
                  +'2009-01-23,299.14\n2009-02-09,346.51\n2009-03-20,325.99\n2009-04-24,386.15\n',
             options: { 
                 fillGraph: true,
-                labelsKMB: true                                
+                labelsKMB: true
             }
         },{
             title: 'Array Input',
