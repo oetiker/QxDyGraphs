@@ -8,4 +8,6 @@ See http://www.dygraphs.com for information on Dygraphs and have a look at
 the demo application source to see how to use QxDyGraphs in your own
 application.
 
+Run `qx serve` for a demo.
+
 Tobi Oetiker, OETIKER+PARTNER AG, <a href="http://it.oetiker.ch">it.oetiker.ch</a>
