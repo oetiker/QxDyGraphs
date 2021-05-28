@@ -1,37 +1,28 @@
 {
-  "info" : 
-  {
-    "name" : "QxDyGraphs",
-
-    "summary" : "QxDyGraphs Contribution",
-    "description" : "Makes Dan Vanderkams Dygraph charting library available in Qooxdoo",
-    
-    "homepage" : "http://contrib.qooxdoo.org/project/QxDyGraphs",
-
-    "license" : "LGPL/EPL",
-    "authors" : 
-    [
+  "info": {
+    "name": "QxDyGraphs",
+    "summary": "QxDyGraphs Contribution",
+    "description": "Makes Dan Vanderkams Dygraph charting library available in Qooxdoo",
+    "homepage": "http://contrib.qooxdoo.org/project/QxDyGraphs",
+    "license": "LGPL/EPL",
+    "authors": [
       {
-        "name" : "Tobi Oetiker (oetiker)",
-        "email" : "tobi@oetiker.ch"
+        "name": "Tobi Oetiker (oetiker)",
+        "email": "tobi@oetiker.ch"
       }
     ],
-    "version" : "1.0.0"
+    "version": "1.0.1"
   },
-  
-  "provides" : 
-  {
-    "namespace"   : "qxdygraphs",
-    "encoding"    : "utf-8",
-    "class"       : "source/class",
-    "resource"    : "source/resource",
-    "translation" : "source/translation"
+  "provides": {
+    "namespace": "qxdygraphs",
+    "encoding": "utf-8",
+    "class": "source/class",
+    "resource": "source/resource",
+    "translation": "source/translation"
   },
   "$schema": "https://qooxdoo.org/schema/Manifest-1-0-0.json",
   "requires": {
     "@qooxdoo/framework": "^6.0.0",
     "@qooxdoo/compiler": "^1.0.0"
   }
-
 }
-
